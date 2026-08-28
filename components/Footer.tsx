@@ -6,13 +6,13 @@ export default function Footer() {
     <footer className="container mx-auto px-4 py-8 border-t border-zinc-800/80 mt-16">
       <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
         {/* Copyright Tag line */}
-        <div className="text-xs text-zinc-500 flex items-center gap-1 font-mono">
+        <div className="text-xs text-zinc-300 flex items-center gap-1 font-mono">
           <span>© {new Date().getFullYear()} BYU // LABS · Go Cougs!</span>
           <Smile className="w-3.5 h-3.5 inline-block text-blue-400" />
         </div>
 
         {/* Dynamic Nav Links */}
-        <div className="flex flex-wrap justify-center gap-4 text-xs text-zinc-400">
+        <div className="flex flex-wrap justify-center gap-4 text-xs text-zinc-300">
           <Link
             href="https://byucougars.com/"
             target="_blank"

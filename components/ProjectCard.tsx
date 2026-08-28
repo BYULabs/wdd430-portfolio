@@ -15,7 +15,7 @@ export default function ProjectCard({ project }: { project: Project }) {
             </span>
           )}
         </div>
-        <p className="text-sm text-zinc-400 mb-6 leading-relaxed">
+        <p className="text-sm text-zinc-300 mb-6 leading-relaxed">
           {project.description}
         </p>
       </div>
@@ -38,7 +38,7 @@ export default function ProjectCard({ project }: { project: Project }) {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-400 hover:text-white transition-colors"
+              className="text-zinc-300 hover:text-white transition-colors"
             >
               GitHub →
             </Link>

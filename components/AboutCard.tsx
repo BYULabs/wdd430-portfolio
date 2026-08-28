@@ -11,11 +11,11 @@ export default function AboutCard() {
             <User className="w-5 h-5 text-blue-500" />
             Background & Focus
           </h2>
-          <p className="text-zinc-400 text-sm leading-relaxed mb-4">
+          <p className="text-zinc-300 text-sm leading-relaxed mb-4">
             Passionate about software architecture, Object-Oriented Programming (OOP), and modern web frameworks. 
             Whether working with React, C#, or Python, I enjoy turning complex software requirements into clean, performant interfaces.
           </p>
-          <p className="text-zinc-400 text-sm leading-relaxed">
+          <p className="text-zinc-300 text-sm leading-relaxed">
             When I’m not coding for coursework or side projects, I’m exploring micro-frontend patterns, system design, and API integrations.
           </p>
         </section>

@@ -14,7 +14,7 @@ export default function Home() {
         <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-4">
           Sebastián Iturralde
         </h1>
-        <p className="max-w-xl text-base md:text-lg text-zinc-400 leading-relaxed">
+        <p className="max-w-xl text-base md:text-lg text-zinc-300 leading-relaxed">
           Full-Stack Developer crafting scalable web applications. Currently focusing on modern React patterns, Next.js Server Components, and Tailwind CSS ecosystem.
         </p>
       </section>

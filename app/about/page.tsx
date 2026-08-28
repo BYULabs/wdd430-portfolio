@@ -11,7 +11,7 @@ export default function About() {
         <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-6">
           Full-Stack Developer & CS Student
         </h1>
-        <p className="max-w-2xl text-base md:text-lg text-zinc-400 leading-relaxed">
+        <p className="max-w-2xl text-base md:text-lg text-zinc-300 leading-relaxed">
           I’m currently pursuing Computer Science at BYU while building full-stack web applications. 
           My focus is on modern React architectures, Next.js Server Components, scalable databases, and clean code principles.
         </p>

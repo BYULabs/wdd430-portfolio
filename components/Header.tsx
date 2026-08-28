@@ -21,7 +21,7 @@ export default function Header() {
         <div className="flex items-center gap-6">
           {/* Main Navigation Links */}
           <nav aria-label="Main Navigation">
-            <ul className="flex items-center gap-4 text-xs md:text-sm font-medium text-zinc-400">
+            <ul className="flex items-center gap-4 text-xs md:text-sm font-medium text-zinc-300">
               <li>
                 <Link 
                   href="/" 
