@@ -1,7 +1,32 @@
 import Link from 'next/link';
 import { User, Globe, Code, ExternalLink } from 'react-feather';
 
-export default function AboutCard() {
+interface AboutCardProps {
+  title?: string;
+  bioParagraphs?: string[];
+  studioUrl?: string;
+  sandboxUrl?: string;
+  skills?: {
+    frontend: string[];
+    backend: string[];
+    engineering: string[];
+  };
+}
+
+export default function AboutCard({
+  title = "Background & Focus",
+  bioParagraphs = [
+    "Passionate about software architecture, Object-Oriented Programming (OOP), and modern web frameworks. Whether working with React, C#, or Python, I enjoy turning complex software requirements into clean, performant interfaces.",
+    "When I’m not coding for coursework or side projects, I’m exploring micro-frontend patterns, system design, and API integrations."
+  ],
+  studioUrl = "https://www.itusebastian.com/",
+  sandboxUrl = "https://byulabs.github.io",
+  skills = {
+    frontend: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+    backend: ["Node.js", "Express", "PostgreSQL", "REST APIs"],
+    engineering: ["C# / SOLID", "Java / OOP", "Python"],
+  },
+}: AboutCardProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
       {/* Left Column: Background & Experience */}
@@ -9,15 +34,13 @@ export default function AboutCard() {
         <section className="repo-card p-6 rounded-xl border border-zinc-800 bg-zinc-900/40">
           <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
             <User className="w-5 h-5 text-blue-500" />
-            Background & Focus
+            {title}
           </h2>
-          <p className="text-zinc-300 text-sm leading-relaxed mb-4">
-            Passionate about software architecture, Object-Oriented Programming (OOP), and modern web frameworks. 
-            Whether working with React, C#, or Python, I enjoy turning complex software requirements into clean, performant interfaces.
-          </p>
-          <p className="text-zinc-300 text-sm leading-relaxed">
-            When I’m not coding for coursework or side projects, I’m exploring micro-frontend patterns, system design, and API integrations.
-          </p>
+          {bioParagraphs.map((paragraph, idx) => (
+            <p key={idx} className="text-zinc-300 text-sm leading-relaxed mb-4 last:mb-0">
+              {paragraph}
+            </p>
+          ))}
         </section>
 
         {/* Connected Sandboxes Section */}
@@ -28,7 +51,7 @@ export default function AboutCard() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
             <Link
-              href="https://www.itusebastian.com/"
+              href={studioUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between p-3 rounded-lg border border-zinc-800 bg-zinc-950/50 hover:border-blue-500/40 transition-colors group"
@@ -37,7 +60,7 @@ export default function AboutCard() {
               <ExternalLink className="w-4 h-4 text-zinc-500 group-hover:text-blue-400" />
             </Link>
             <Link
-              href="https://byulabs.github.io"
+              href={sandboxUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between p-3 rounded-lg border border-zinc-800 bg-zinc-950/50 hover:border-blue-500/40 transition-colors group"
@@ -61,29 +84,33 @@ export default function AboutCard() {
             <div>
               <span className="text-xs text-zinc-500 font-mono block mb-2">Frontend</span>
               <div className="flex flex-wrap gap-2">
-                <span className="comp-pill text-xs px-3 py-1.5 rounded-md border border-zinc-700/60 bg-zinc-800/50 text-zinc-300">Next.js</span>
-                <span className="comp-pill text-xs px-3 py-1.5 rounded-md border border-zinc-700/60 bg-zinc-800/50 text-zinc-300">React</span>
-                <span className="comp-pill text-xs px-3 py-1.5 rounded-md border border-zinc-700/60 bg-zinc-800/50 text-zinc-300">TypeScript</span>
-                <span className="comp-pill text-xs px-3 py-1.5 rounded-md border border-zinc-700/60 bg-zinc-800/50 text-zinc-300">Tailwind CSS</span>
+                {skills.frontend.map((skill) => (
+                  <span key={skill} className="comp-pill text-xs px-3 py-1.5 rounded-md border border-zinc-700/60 bg-zinc-800/50 text-zinc-300">
+                    {skill}
+                  </span>
+                ))}
               </div>
             </div>
 
             <div>
               <span className="text-xs text-zinc-500 font-mono block mb-2">Backend & Databases</span>
               <div className="flex flex-wrap gap-2">
-                <span className="comp-pill text-xs px-3 py-1.5 rounded-md border border-zinc-700/60 bg-zinc-800/50 text-zinc-300">Node.js</span>
-                <span className="comp-pill text-xs px-3 py-1.5 rounded-md border border-zinc-700/60 bg-zinc-800/50 text-zinc-300">Express</span>
-                <span className="comp-pill text-xs px-3 py-1.5 rounded-md border border-zinc-700/60 bg-zinc-800/50 text-zinc-300">PostgreSQL</span>
-                <span className="comp-pill text-xs px-3 py-1.5 rounded-md border border-zinc-700/60 bg-zinc-800/50 text-zinc-300">REST APIs</span>
+                {skills.backend.map((skill) => (
+                  <span key={skill} className="comp-pill text-xs px-3 py-1.5 rounded-md border border-zinc-700/60 bg-zinc-800/50 text-zinc-300">
+                    {skill}
+                  </span>
+                ))}
               </div>
             </div>
 
             <div>
               <span className="text-xs text-zinc-500 font-mono block mb-2">Software Engineering</span>
               <div className="flex flex-wrap gap-2">
-                <span className="comp-pill text-xs px-3 py-1.5 rounded-md border border-zinc-700/60 bg-zinc-800/50 text-zinc-300">C# / SOLID</span>
-                <span className="comp-pill text-xs px-3 py-1.5 rounded-md border border-zinc-700/60 bg-zinc-800/50 text-zinc-300">Java / OOP</span>
-                <span className="comp-pill text-xs px-3 py-1.5 rounded-md border border-zinc-700/60 bg-zinc-800/50 text-zinc-300">Python</span>
+                {skills.engineering.map((skill) => (
+                  <span key={skill} className="comp-pill text-xs px-3 py-1.5 rounded-md border border-zinc-700/60 bg-zinc-800/50 text-zinc-300">
+                    {skill}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
