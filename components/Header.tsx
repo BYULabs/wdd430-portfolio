@@ -32,6 +32,14 @@ export default function Header() {
               </li>
               <li>
                 <Link 
+                  href="/projects" 
+                  className="hover:text-white transition-colors"
+                >
+                  Projects
+                </Link>
+              </li>
+              <li>
+                <Link 
                   href="/about" 
                   className="hover:text-white transition-colors"
                 >
