@@ -10,7 +10,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        mono: ['var(--font-jetbrains-mono)', 'monospace'],
       },
       animation: {
         float: "float 6s ease-in-out infinite",
