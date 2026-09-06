@@ -5,6 +5,7 @@ export interface Project {
   githubUrl?: string;
   liveUrl: string;
   featured?: boolean;
+  category: 'opensource' | 'school' | 'personal';
 }
 
 export const projects: Project[] = [
@@ -14,6 +15,7 @@ export const projects: Project[] = [
     technologies: ["JavaScript", "HTML5 Canvas/DOM", "CSS3", "Game Logic"],
     liveUrl: "https://cuarenta.itusebastian.com/",
     featured: true,
+    category: "opensource",
   },
   {
     title: "Relato Corto",
@@ -21,6 +23,7 @@ export const projects: Project[] = [
     technologies: ["SEO", "Web Performance", "Content Strategy", "Analytics"],
     liveUrl: "https://relatocorto.com/",
     featured: true,
+    category: "personal",
   },
   {
     title: "CougarHype",
@@ -29,6 +32,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/BYULabs/cougarhype",
     liveUrl: "https://cougarhype.onrender.com/",
     featured: true,
+    category: "school",
   },
   {
     title: "CSE 340: ServiceNetwork",
@@ -36,6 +40,7 @@ export const projects: Project[] = [
     technologies: ["Node.js", "Express", "PostgreSQL", "MVC"],
     githubUrl: "https://github.com/BYULabs/cse340",
     liveUrl: "https://cse340-p8my.onrender.com/",
+    category: "school",
   },
   {
     title: "WDD 330: SleepOutside",
@@ -43,6 +48,7 @@ export const projects: Project[] = [
     technologies: ["JavaScript", "HTML5", "CSS3", "REST APIs"],
     githubUrl: "https://github.com/BYULabs/wdd330",
     liveUrl: "https://wdd330-y0zq.onrender.com/",
+    category: "school",
   },
   {
     title: "Fabrication Unit",
@@ -50,5 +56,6 @@ export const projects: Project[] = [
     technologies: ["HTML5", "CSS3", "JavaScript", "GitHub Pages"],
     githubUrl: "https://github.com/BYULabs/fabrication-unit",
     liveUrl: "https://byulabs.github.io/fabrication-unit/",
+    category: "opensource",
   },
 ];
