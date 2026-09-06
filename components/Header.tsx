@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { GitHub, Linkedin } from 'react-feather';
+import NavLinks from './NavLinks';
 
 export default function Header() {
   return (
@@ -20,34 +21,7 @@ export default function Header() {
         {/* Navigation & Actions */}
         <div className="flex items-center gap-6">
           {/* Main Navigation Links */}
-          <nav aria-label="Main Navigation">
-            <ul className="flex items-center gap-4 text-xs md:text-sm font-medium text-zinc-300">
-              <li>
-                <Link 
-                  href="/" 
-                  className="hover:text-white transition-colors"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/projects" 
-                  className="hover:text-white transition-colors"
-                >
-                  Projects
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/about" 
-                  className="hover:text-white transition-colors"
-                >
-                  About
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          <NavLinks />
 
           <div className="h-4 w-px bg-zinc-800 hidden sm:block" />
 
