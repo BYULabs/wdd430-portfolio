@@ -1,5 +1,5 @@
 import ProjectCard from './ProjectCard';
-import { Project } from '@/data/projects';
+import { Project } from '@/lib/projects-db';
 
 interface ProjectListProps {
   projects: Project[];

@@ -1,9 +1,9 @@
 import ProjectCard from '@/components/ProjectCard';
-import { projects } from '@/data/projects';
+import { projects } from '@/lib/projects-db';
 
 export default function OpenSourceProjects() {
   const openSourceProjects = projects.filter(
-    (project) => project.category === 'opensource'
+    (project) => project.type === 'opensource'
   );
 
   return (

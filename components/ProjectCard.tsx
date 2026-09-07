@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Project } from '@/data/projects';
+import { Project } from '@/lib/projects-db';
 
 export default function ProjectCard({ project }: { project: Project }) {
   return (
