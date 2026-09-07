@@ -1,7 +1,21 @@
 import ProjectCard from '@/components/ProjectCard';
-import { projects } from '@/lib/projects-db';
+import { headers } from 'next/headers';
 
-export default function Projects() {
+async function getProjects(): Promise<Project[]> {
+  const host = (await headers()).get('host');
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+  
+  const res = await fetch(`${protocol}://${host}/api/projects`, {
+    cache: 'no-store',
+  });
+
+  if (!res.ok) throw new Error('Failed to fetch projects');
+  return res.json();
+}
+
+export default async function Projects() {
+  const fetchedProjects = await getProjects();
+
   return (
     <div>
       {/* Header Section */}
@@ -22,8 +36,8 @@ export default function Projects() {
       {/* Projects Grid Section */}
       <section className="mb-12">
         <div className="grid gap-4 md:grid-cols-2">
-          {projects.map((project) => (
-            <ProjectCard key={project.title} project={project} />
+          {fetchedProjects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
       </section>

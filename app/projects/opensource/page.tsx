@@ -1,10 +1,20 @@
 import ProjectCard from '@/components/ProjectCard';
-import { projects } from '@/lib/projects-db';
+import { headers } from 'next/headers';
 
-export default function OpenSourceProjects() {
-  const openSourceProjects = projects.filter(
-    (project) => project.type === 'opensource'
-  );
+async function getOpenSourceProjects(): Promise<Project[]> {
+  const host = (await headers()).get('host');
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+
+  const res = await fetch(`${protocol}://${host}/api/projects?type=opensource`, {
+    cache: 'no-store',
+  });
+
+  if (!res.ok) throw new Error('Failed to fetch open-source projects');
+  return res.json();
+}
+
+export default async function OpenSourceProjects() {
+  const openSourceProjects = await getOpenSourceProjects();
 
   return (
     <div>
@@ -25,7 +35,7 @@ export default function OpenSourceProjects() {
       <section className="mb-12">
         <div className="grid gap-4 md:grid-cols-2">
           {openSourceProjects.map((project) => (
-            <ProjectCard key={project.title} project={project} />
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
       </section>
