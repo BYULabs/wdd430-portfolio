@@ -1,3 +1,4 @@
+import { Project } from '@/lib/projects-db';
 import ProjectCard from '@/components/ProjectCard';
 import { headers } from 'next/headers';
 

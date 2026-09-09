@@ -7,6 +7,7 @@ export interface Project {
   link?: string;
   githubUrl?: string;
   featured?: boolean;
+  liveUrl?: string;
 }
 
 export const projects: Project[] = [
