@@ -1,7 +1,9 @@
 import ProjectCard from '@/components/ProjectCard';
-import { projects } from '@/lib/projects-db';
+import { getProjects } from '@/lib/projects-db';
 
-export default function Home() {
+export default async function Home() {
+  const projects = await getProjects();
+
   return (
     <div className="max-w-5xl mx-auto">
       {/* Hero Section */}
