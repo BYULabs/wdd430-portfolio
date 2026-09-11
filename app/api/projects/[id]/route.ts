@@ -20,7 +20,8 @@ export async function GET(
     );
   }
 
-  const project = getProjectById(numericId);
+  // Await the async getProjectById query
+  const project = await getProjectById(numericId);
 
   // Return 404 if no project exists with that ID
   if (!project) {
