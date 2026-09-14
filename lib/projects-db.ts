@@ -12,7 +12,6 @@ export interface Project {
   liveUrl?: string;
 }
 
-// Database row interface matching PostgreSQL column names
 interface ProjectRow {
   id: number;
   title: string;
@@ -25,7 +24,6 @@ interface ProjectRow {
   live_url?: string;
 }
 
-// Helper to format database row into TypeScript interface format
 function mapProjectRow(row: ProjectRow): Project {
   return {
     id: row.id,
@@ -59,4 +57,37 @@ export async function getProjectById(id: number): Promise<Project | null> {
   
   if (!rows[0]) return null;
   return mapProjectRow(rows[0]);
+}
+
+const ITEMS_PER_PAGE = 6;
+
+export async function fetchFilteredProjects(
+  query: string,
+  currentPage: number
+): Promise<Project[]> {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  const searchPattern = `%${query}%`;
+
+  const { rows } = await sql<ProjectRow>`
+    SELECT * FROM projects
+    WHERE title ILIKE ${searchPattern} 
+       OR description ILIKE ${searchPattern}
+    ORDER BY id
+    LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+  `;
+
+  return rows.map(mapProjectRow);
+}
+
+export async function fetchProjectsPages(query: string): Promise<number> {
+  const searchPattern = `%${query}%`;
+
+  const { rows } = await sql<{ count: string }>`
+    SELECT COUNT(*) FROM projects
+    WHERE title ILIKE ${searchPattern} 
+       OR description ILIKE ${searchPattern}
+  `;
+
+  const totalCount = Number(rows[0].count);
+  return Math.ceil(totalCount / ITEMS_PER_PAGE);
 }
