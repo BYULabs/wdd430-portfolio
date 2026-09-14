@@ -1,21 +1,19 @@
-import { Project } from '@/lib/projects-db';
 import ProjectCard from '@/components/ProjectCard';
-import { headers } from 'next/headers';
+import { ProjectSearch } from '@/components/ProjectSearch';
+import { Pagination } from '@/components/Pagination';
+import { fetchFilteredProjects, fetchProjectsPages } from '@/lib/projects-db';
 
-async function getProjects(): Promise<Project[]> {
-  const host = (await headers()).get('host');
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  
-  const res = await fetch(`${protocol}://${host}/api/projects`, {
-    cache: 'no-store',
-  });
+export default async function Projects(props: {
+  searchParams?: Promise<{ query?: string; page?: string }>;
+}) {
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || '';
+  const currentPage = Number(searchParams?.page) || 1;
 
-  if (!res.ok) throw new Error('Failed to fetch projects');
-  return res.json();
-}
-
-export default async function Projects() {
-  const fetchedProjects = await getProjects();
+  const [fetchedProjects, totalPages] = await Promise.all([
+    fetchFilteredProjects(query, currentPage),
+    fetchProjectsPages(query),
+  ]);
 
   return (
     <div>
@@ -32,16 +30,26 @@ export default async function Projects() {
         </p>
       </section>
 
+      {/* Search Input Component */}
+      <ProjectSearch />
+
       <hr className="border-zinc-800 mb-10" />
 
       {/* Projects Grid Section */}
       <section className="mb-12">
-        <div className="grid gap-4 md:grid-cols-2">
-          {fetchedProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
+        {fetchedProjects.length === 0 ? (
+          <p className="text-zinc-500 font-mono py-8">No projects found matching your search term.</p>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2">
+            {fetchedProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        )}
       </section>
+
+      {/* Pagination Controls */}
+      <Pagination totalPages={totalPages} />
     </div>
   );
 }
