@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Project } from '@/lib/projects-db';
+import { deleteProject } from '@/app/lib/actions';
 
 export default function ProjectCard({ project }: { project: Project }) {
   return (
@@ -54,6 +55,22 @@ export default function ProjectCard({ project }: { project: Project }) {
               Live Demo ↗
             </Link>
           )}
+
+          <Link
+            href={`/projects/${project.id}/edit`}
+            className="text-zinc-300 hover:text-white transition-colors"
+          >
+            Edit
+          </Link>
+
+          <form action={deleteProject.bind(null, String(project.id))}>
+            <button
+              type="submit"
+              className="text-red-400 hover:text-red-300 transition-colors"
+            >
+              Delete
+            </button>
+          </form>
         </div>
       </div>
     </article>
