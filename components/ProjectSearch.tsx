@@ -22,7 +22,7 @@ export function ProjectSearch() {
   }, 300);
 
   return (
-    <div className="mb-6">
+    <div>
       <input
         type="search"
         placeholder="Search projects by title or description..."
