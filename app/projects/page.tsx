@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import ProjectCard from '@/components/ProjectCard';
 import { ProjectSearch } from '@/components/ProjectSearch';
 import { Pagination } from '@/components/Pagination';
@@ -31,7 +32,17 @@ export default async function Projects(props: {
       </section>
 
       {/* Search Input Component */}
-      <ProjectSearch />
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start mb-6">
+        <div className="flex-1">
+          <ProjectSearch />
+        </div>
+        <Link
+          href="/projects/create"
+          className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 transition-colors sm:mt-0"
+        >
+          New Project
+        </Link>
+      </div>
 
       <hr className="border-zinc-800 mb-10" />
 
