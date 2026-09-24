@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@vercel/postgres": "^0.10.0",
@@ -15,7 +15,8 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-feather": "^2.0.10",
-    "use-debounce": "^10.1.1"
+    "use-debounce": "^10.1.1",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
