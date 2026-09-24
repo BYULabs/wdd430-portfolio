@@ -6,7 +6,7 @@ export default function About() {
       {/* Page Header */}
       <section className="py-10 md:py-16">
         <div className="text-xs tracking-widest uppercase text-blue-400 mb-3 font-mono">
-          // About // Sebastián Iturralde
+          About // Sebastián Iturralde
         </div>
         <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-6">
           Full-Stack Developer & CS Student

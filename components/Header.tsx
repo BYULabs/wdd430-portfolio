@@ -14,7 +14,7 @@ export default function Header() {
           aria-label="BYU Labs Home"
         >
           <span className="text-blue-500 font-bold">BYU</span>
-          <span className="text-zinc-500 font-normal"> // </span>
+          <span className="text-zinc-500 font-normal"> \\ </span>
           <span className="text-zinc-300">LABS</span>
         </Link>
 

@@ -21,7 +21,7 @@ export default async function OpenSourceProjects() {
     <div>
       <section className="mb-8">
         <div className="text-xs tracking-widest uppercase text-blue-400 mb-3 font-mono">
-          // Portfolio // Community & Contributions
+          Portfolio // Community & Contributions
         </div>
         <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-4">
           Open Source Projects
