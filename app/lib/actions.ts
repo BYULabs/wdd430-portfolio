@@ -5,11 +5,38 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
+const currentYear = new Date().getFullYear();
+
 const ProjectFormSchema = z.object({
   title: z.string().min(2),
   description: z.string().min(10),
   technologies: z.string().min(2),
 });
+
+const CreateProjectSchema = z.object({
+  title: z.string().min(3, 'Title must be at least 3 characters.'),
+  description: z.string().min(20, 'Description must be at least 20 characters.'),
+  technologies: z.string().min(2, 'Add at least one technology.'),
+  yearCompleted: z.coerce
+    .number()
+    .int('Year must be a whole number.')
+    .gte(2000, 'Year must be 2000 or later.')
+    .lte(currentYear, `Year cannot be greater than ${currentYear}.`),
+  type: z.enum(['personal', 'school', 'opensource'], {
+    message: 'Choose a project type.',
+  }),
+});
+
+export type State = {
+  errors?: {
+    title?: string[];
+    description?: string[];
+    technologies?: string[];
+    yearCompleted?: string[];
+    type?: string[];
+  };
+  message?: string | null;
+};
 
 function parseTechnologies(value: string): string[] {
   return value
@@ -45,19 +72,45 @@ function parseProjectForm(formData: FormData) {
   };
 }
 
-export async function createProject(formData: FormData) {
-  const { title, description, type, technologies } = parseProjectForm(formData);
+export async function createProject(prevState: State, formData: FormData): Promise<State> {
+  const validatedFields = CreateProjectSchema.safeParse({
+    title: formData.get('title'),
+    description: formData.get('description'),
+    technologies: formData.get('technologies'),
+    yearCompleted: formData.get('yearCompleted'),
+    type: formData.get('type'),
+  });
 
-  const technologiesValue = technologies.join(',');
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing or invalid fields. Failed to create project.',
+    };
+  }
+
+  const { title, description, technologies, yearCompleted, type } = validatedFields.data;
+  const technologiesValue = technologies
+    .split(',')
+    .map((tech) => tech.trim())
+    .filter(Boolean)
+    .join(',');
 
   try {
     await sql`
-      INSERT INTO projects (title, description, type, technologies)
-      VALUES (${title}, ${description}, ${type}, string_to_array(${technologiesValue}, ','))
+      INSERT INTO projects (title, description, type, technologies, year_completed)
+      VALUES (
+        ${title},
+        ${description},
+        ${type},
+        string_to_array(${technologiesValue}, ','),
+        ${yearCompleted}
+      )
     `;
   } catch (error) {
     console.error('Error creating project:', error);
-    throw new Error('Failed to create project. Please try again later.');
+    return {
+      message: 'Database Error: Failed to create project.',
+    };
   }
 
   revalidatePath('/projects');
