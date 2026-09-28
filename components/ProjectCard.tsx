@@ -1,14 +1,20 @@
 import Link from 'next/link';
 import { Project } from '@/lib/projects-db';
-import { deleteProject } from '@/app/lib/actions';
+import { EditButton, DeleteButton } from '@/components/ProjectActions';
 
-export default function ProjectCard({ project }: { project: Project }) {
+export default function ProjectCard({
+  project,
+  showActions = false,
+}: {
+  project: Project;
+  showActions?: boolean;
+}) {
   return (
     <article className="group relative flex flex-col justify-between rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/10">
       <div>
         <div className="flex items-center justify-between gap-2 mb-3">
           <h3 className="text-xl font-semibold text-zinc-100 group-hover:text-blue-400 transition-colors">
-            {project.title}
+            <Link href={`/projects/${project.id}`}>{project.title}</Link>
           </h3>
           {project.featured && (
             <span className="rounded-full bg-blue-500/10 px-2.5 py-0.5 text-xs font-medium text-blue-400 border border-blue-500/20">
@@ -56,21 +62,12 @@ export default function ProjectCard({ project }: { project: Project }) {
             </Link>
           )}
 
-          <Link
-            href={`/projects/${project.id}/edit`}
-            className="text-zinc-300 hover:text-white transition-colors"
-          >
-            Edit
-          </Link>
-
-          <form action={deleteProject.bind(null, String(project.id))}>
-            <button
-              type="submit"
-              className="text-red-400 hover:text-red-300 transition-colors"
-            >
-              Delete
-            </button>
-          </form>
+          {showActions && (
+            <>
+              <EditButton id={project.id} />
+              <DeleteButton id={project.id} />
+            </>
+          )}
         </div>
       </div>
     </article>

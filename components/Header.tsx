@@ -1,8 +1,12 @@
 import Link from 'next/link';
 import { GitHub, Linkedin } from 'react-feather';
 import NavLinks from './NavLinks';
+import { auth } from '@/auth';
+import { SignOutButton } from './SignOutButton';
 
-export default function Header() {
+export default async function Header() {
+  const session = await auth();
+
   return (
     <header className="container mx-auto px-4 py-5 md:py-6">
       <div className="flex items-center justify-between max-w-5xl mx-auto">
@@ -22,6 +26,28 @@ export default function Header() {
         <div className="flex items-center gap-6">
           {/* Main Navigation Links */}
           <NavLinks />
+
+          <div className="h-4 w-px bg-zinc-800 hidden sm:block" />
+
+          {/* Owner Auth Controls */}
+          {session?.user ? (
+            <div className="flex items-center gap-4">
+              <Link
+                href="/dashboard/projects"
+                className="text-xs md:text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+              >
+                Dashboard
+              </Link>
+              <SignOutButton />
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              className="text-xs md:text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+            >
+              Sign In
+            </Link>
+          )}
 
           <div className="h-4 w-px bg-zinc-800 hidden sm:block" />
 
