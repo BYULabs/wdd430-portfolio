@@ -1,4 +1,4 @@
-import CreateProjectForm from '@/app/projects/create/create-project-form';
+import CreateProjectForm from '@/app/dashboard/projects/new/create-project-form';
 
 export default function Page() {
   return (
