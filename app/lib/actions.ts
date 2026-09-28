@@ -4,6 +4,8 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { AuthError } from 'next-auth';
+import { auth, signIn } from '@/auth';
 
 const currentYear = new Date().getFullYear();
 
@@ -37,6 +39,36 @@ export type State = {
   };
   message?: string | null;
 };
+
+async function requireOwnerSession() {
+  const session = await auth();
+  if (!session?.user) throw new Error('Not authenticated');
+  return session;
+}
+
+function revalidateProjectPaths() {
+  revalidatePath('/projects');
+  revalidatePath('/dashboard/projects');
+}
+
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    await signIn('credentials', formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid email or password.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error; // re-throw so Next.js handles the redirect
+  }
+}
 
 function parseTechnologies(value: string): string[] {
   return value
@@ -73,6 +105,8 @@ function parseProjectForm(formData: FormData) {
 }
 
 export async function createProject(prevState: State, formData: FormData): Promise<State> {
+  await requireOwnerSession();
+
   const validatedFields = CreateProjectSchema.safeParse({
     title: formData.get('title'),
     description: formData.get('description'),
@@ -113,11 +147,13 @@ export async function createProject(prevState: State, formData: FormData): Promi
     };
   }
 
-  revalidatePath('/projects');
-  redirect('/projects');
+  revalidateProjectPaths();
+  redirect('/dashboard/projects');
 }
 
 export async function updateProject(id: string, formData: FormData) {
+  await requireOwnerSession();
+
   const { title, description, type, technologies } = parseProjectForm(formData);
 
   const technologiesValue = technologies.join(',');
@@ -137,11 +173,13 @@ export async function updateProject(id: string, formData: FormData) {
     throw new Error('Failed to update project. Please try again later.');
   }
 
-  revalidatePath('/projects');
-  redirect('/projects');
+  revalidateProjectPaths();
+  redirect('/dashboard/projects');
 }
 
 export async function deleteProject(id: string) {
+  await requireOwnerSession();
+
   try {
     await sql`DELETE FROM projects WHERE id = ${id}`;
   } catch (error) {
@@ -149,6 +187,5 @@ export async function deleteProject(id: string) {
     throw new Error('Failed to delete project. Please try again later.');
   }
 
-  revalidatePath('/projects');
-  redirect('/projects');
+  revalidateProjectPaths();
 }
