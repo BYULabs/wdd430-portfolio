@@ -9,10 +9,10 @@ export default function NotFound() {
       </p>
       <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <Link
-          href="/projects"
+          href="/dashboard/projects"
           className="rounded-lg border border-zinc-700 px-4 py-2.5 text-sm font-semibold text-zinc-200 hover:bg-zinc-800 transition-colors"
         >
-          Back to Projects
+          Back to Dashboard
         </Link>
       </div>
     </div>
